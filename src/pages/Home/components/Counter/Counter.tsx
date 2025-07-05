@@ -4,7 +4,6 @@ import { formatInputTime, formatTime } from "../../../../utils/formatsTimer";
 import './../../../../index.css';
 
 export default function Counter() {
-  //contador e Timer
 const [counter, setCounter] = useState(0);
 const [time, setTime] = useState<number>(0)
 const [inputTime, setInputTime] = useState<string>("0:00:00")
@@ -21,7 +20,6 @@ const [intervalId, setIntervalId] = useState<number | null>(null);
     setTime(timeInSeconds);
   };
 
-//botões de controle
 const handlePlay = () => {
     if (!intervalId) {
       const id = setInterval(() => {
@@ -58,8 +56,6 @@ const handleCheck = () => {
     setTypeClick("");
 };
 
-//estilo na borda do contador
-
 const borderStyleCounter = (command: string) => {
   switch (command) {
     case 'play':
@@ -73,11 +69,15 @@ const borderStyleCounter = (command: string) => {
   }
 };
 
-//verifica se o contador finalizou e muda a cor da borda do contador
+const playAlertSound = () => {
+  const alertSound = new Audio("/alertSound.wav"); 
+  alertSound.play();
+};
 
 const checkCounterEnd = useCallback(() => {
-  if (counter === time){
+  if (counter === time) {
     setTypeClick("check");
+    playAlertSound();
     if (intervalId) {
       clearInterval(intervalId);
       setIntervalId(null);
@@ -85,6 +85,9 @@ const checkCounterEnd = useCallback(() => {
     }
   }
 }, [counter, time, intervalId]);
+
+
+
 
 useEffect(() => {
   if (intervalId) {

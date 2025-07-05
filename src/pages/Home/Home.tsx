@@ -1,11 +1,12 @@
-import styles from './Home.module.css';
 import Counter from './components/Counter/Counter';
+import Header from './components/Header/Header';
+import styles from './Home.module.css';
 
 export default function Home(){
     return (
-        <div>
-        <h1 className={styles.title}>Diário de Tarefas</h1>
-        <Counter />
+        <div className={styles.container}>
+            <Header />
+            <Counter />
         </div>
     )
 }
