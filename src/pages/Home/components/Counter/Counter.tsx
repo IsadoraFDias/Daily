@@ -1,21 +1,24 @@
 import { useState } from "react";
 import styles from "./Counter.module.css";
-import { formatTime } from "../../../../utils/formatsTimer";
+import { formatInputTime, formatTime } from "../../../../utils/formatsTimer";
 
 export default function Counter() {
   //contador e Timer
 const [counter, setCounter] = useState(0);
 const [time, setTime] = useState<number>(0)
-const [inputTime, setInputTime] = useState<string>("")
+const [inputTime, setInputTime] = useState<string>("0:00:00")
 const [intervalId, setIntervalId] = useState<number | null>(null);
 
-  const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {  
-     const inputTime = event.target.value;
-     const timeInSeconds = parseInt(inputTime, 10);
-     setTime(timeInSeconds);
-     setInputTime(inputTime);
-     
-  }
+
+  const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const rawInput = event.target.value;
+    const formattedInput = formatInputTime(rawInput);
+    setInputTime(formattedInput);
+
+    const [hours, minutes, seconds] = formattedInput.split(":").map(Number);
+    const timeInSeconds = hours * 3600 + minutes * 60 + seconds;
+    setTime(timeInSeconds);
+  };
 
 //botões de controle
 const handlePlay = () => {
@@ -48,7 +51,7 @@ const handleCheck = () => {
     }
     setCounter(0);
     setTime(0);
-    setInputTime("");
+    setInputTime("0:00:00");
 };
 
   return (
@@ -58,7 +61,7 @@ const handleCheck = () => {
       </div>
       <div className={styles.commands}>
         <div className={styles.boxInput}>
-          <input value={inputTime} type="text" placeholder="Tempo" className={styles.inputTime} onChange={handleTimeChange}/>
+          <input value={inputTime} type="text" placeholder="Tempo" className={styles.inputTime} onChange={handleTimeChange} />
         </div>
         <div className={styles.boxButtons}>
           <button className={styles.buttonComands} onClick={handlePlay}>
