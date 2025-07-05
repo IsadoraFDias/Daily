@@ -1,17 +1,25 @@
 :root {
-  --primary-color: #7E57C2;
-  --secondary-color: #FFFFFF;
-  --text-color: #E0E0E0;
-  --success-icon-color: #8BC34A;
-  --alert-icon-color: #FBC02D;
-  --error-icon-color: #E57373;
+  /* Nova Paleta de Cores */
+  --primary-color: #4CAF50; /* Verde vibrante para elementos primários e acentuação */
+  --secondary-color: #FFFFFF; /* Branco para fundos de destaque */
+  --background-gradient-start: #263238; /* Azul escuro/cinza para o início do gradiente do fundo */
+  --background-gradient-end: #37474F; /* Azul/cinza médio para o fim do gradiente do fundo */
+  --text-color: #ECEFF1; /* Cinza claro para o texto principal, legível no fundo escuro */
+  --header-gradient-start: #212121; /* Azul índigo para o início do gradiente do cabeçalho */
+  --header-gradient-end: #424242; /* Azul médio para o fim do gradiente do cabeçalho */
+  --border-color: #607D8B; /* Azul acinzentado para bordas e linhas sutis */
+  --success-icon-color: #66BB6A; /* Verde mais suave para ícones de sucesso */
+  --alert-icon-color: #FFCA28; /* Amarelo dourado para ícones de alerta */
+  --error-icon-color: #EF5350; /* Vermelho mais suave para ícones de erro */
+
+  /* Estilos Globais */
   margin: 0;
-  padding: 0 0;
-  background: linear-gradient(to bottom, #212121, #2C3E50);
+  padding: 0;
+  background: linear-gradient(to bottom, var(--background-gradient-start), var(--background-gradient-end));
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;
   height: 100vh;
   font-family: 'Arial', sans-serif;
-  overflow: hidden;
+  overflow: hidden; /* Mantém o layout contido */
 }
