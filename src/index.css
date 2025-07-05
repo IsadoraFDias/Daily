@@ -2,8 +2,9 @@
   --primary-color: #7E57C2;
   --secondary-color: #FFFFFF;
   --text-color: #E0E0E0;
-  --success-icon-color: #CDDC39;
-  --alert-icon-color: #FF9800;
+  --success-icon-color: #8BC34A;
+  --alert-icon-color: #FBC02D;
+  --error-icon-color: #E57373;
   margin: 0;
   padding: 0 0;
   background: linear-gradient(to bottom, #212121, #2C3E50);

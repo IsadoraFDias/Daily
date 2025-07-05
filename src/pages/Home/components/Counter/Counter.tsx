@@ -1,14 +1,15 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import styles from "./Counter.module.css";
 import { formatInputTime, formatTime } from "../../../../utils/formatsTimer";
+import './../../../../index.css';
 
 export default function Counter() {
   //contador e Timer
 const [counter, setCounter] = useState(0);
 const [time, setTime] = useState<number>(0)
 const [inputTime, setInputTime] = useState<string>("0:00:00")
+const [typeClick, setTypeClick] = useState<string>("");
 const [intervalId, setIntervalId] = useState<number | null>(null);
-
 
   const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const rawInput = event.target.value;
@@ -35,6 +36,7 @@ const handlePlay = () => {
       }, 1000);
       setIntervalId(id);
     }
+    setTypeClick("play");
   };
 
 const handlePause = () => {
@@ -42,6 +44,7 @@ const handlePause = () => {
       clearInterval(intervalId);
       setIntervalId(null);
     }
+    setTypeClick("pause");
   };
 
 const handleCheck = () => {
@@ -52,16 +55,51 @@ const handleCheck = () => {
     setCounter(0);
     setTime(0);
     setInputTime("0:00:00");
+    setTypeClick("");
 };
+
+//estilo na borda do contador
+
+const borderStyleCounter = (command: string) => {
+  switch (command) {
+    case 'play':
+      return { borderColor: "var(--alert-icon-color)" };
+    case 'pause':
+      return { borderColor: "var(--error-icon-color)" };
+    case 'check':
+      return { borderColor: "var(--success-icon-color)" };
+    default:
+      return { borderColor: "var(--text-color)" };
+  }
+};
+
+//verifica se o contador finalizou e muda a cor da borda do contador
+
+const checkCounterEnd = useCallback(() => {
+  if (counter === time){
+    setTypeClick("check");
+    if (intervalId) {
+      clearInterval(intervalId);
+      setIntervalId(null);
+      setTime(0);
+    }
+  }
+}, [counter, time, intervalId]);
+
+useEffect(() => {
+  if (intervalId) {
+    checkCounterEnd();
+  }}, [counter, time, intervalId, checkCounterEnd]);
+
 
   return (
     <div className={styles.containerCounter}>
-      <div id={styles.counter}>
+      <div id={styles.counter} style={borderStyleCounter(typeClick)}>
         <p>{formatTime(counter)}</p>
       </div>
       <div className={styles.commands}>
         <div className={styles.boxInput}>
-          <input value={inputTime} type="text" placeholder="Tempo" className={styles.inputTime} onChange={handleTimeChange} />
+          <input disabled={typeClick === "play" || typeClick === "pause"} value={inputTime} type="text" placeholder="Tempo" className={styles.inputTime} onChange={handleTimeChange} />
         </div>
         <div className={styles.boxButtons}>
           <button className={styles.buttonComands} onClick={handlePlay}>
