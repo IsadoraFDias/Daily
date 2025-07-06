@@ -25,9 +25,14 @@
   gap: 35px;
 }
 
+.links{
+    text-decoration: none;
+}
+
 .containerLinks h3 {
   font-size: 1.1rem; 
   color: var(--secondary-color);
+  text-decoration: none;
   cursor: pointer;
   transition: color 0.3s ease, transform 0.2s ease; 
 }

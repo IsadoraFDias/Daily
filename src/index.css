@@ -5,6 +5,7 @@
   --background-gradient-start: #263238; /* Azul escuro/cinza para o início do gradiente do fundo */
   --background-gradient-end: #37474F; /* Azul/cinza médio para o fim do gradiente do fundo */
   --text-color: #ECEFF1; /* Cinza claro para o texto principal, legível no fundo escuro */
+  --text-color-alt: #212121; /* Azul índigo para texto alternativo */
   --header-gradient-start: #212121; /* Azul índigo para o início do gradiente do cabeçalho */
   --header-gradient-end: #424242; /* Azul médio para o fim do gradiente do cabeçalho */
   --border-color: #607D8B; /* Azul acinzentado para bordas e linhas sutis */
