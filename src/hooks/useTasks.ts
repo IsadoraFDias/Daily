@@ -55,6 +55,7 @@ export default function useTasks({resetCounter}: TaskProp) {
   const handleDelete = (index: number) => {
     const updatedTasks = tasks.filter((_, i) => i !== index);
     setTasks(updatedTasks);
+    resetCounter();
     localStorage.setItem("tasks", JSON.stringify({ tasks: updatedTasks }));
   };
 
