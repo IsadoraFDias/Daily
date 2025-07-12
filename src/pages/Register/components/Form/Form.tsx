@@ -29,7 +29,7 @@ export function Form() {
           </label>
           <p className={styles.label}>Crie sua senha</p>
           <Password classNameLabel={styles.label} classNameInput={styles.input} />
-          <button type="submit" className={styles.button}>
+          <button type="button" className={styles.button} onClick={() => window.location.href = '/notFound'}>
             Cadastrar
           </button>
         </form>

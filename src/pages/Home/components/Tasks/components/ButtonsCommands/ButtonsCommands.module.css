@@ -1,0 +1,27 @@
+.boxButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 15px; 
+}
+
+.imageButton {
+  width: 20px; 
+  height: 20px;
+  border: none;
+  cursor: pointer;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2)); 
+}
+
+.buttonComands {
+  background: none;
+  border: none;
+  padding: 0;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.buttonComands:hover {
+  transform: scale(1.25);
+  opacity: 0.9;
+}
