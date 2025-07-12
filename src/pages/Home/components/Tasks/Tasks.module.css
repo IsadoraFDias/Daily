@@ -1,0 +1,13 @@
+.columnForm{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+
+.boxTasks{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
