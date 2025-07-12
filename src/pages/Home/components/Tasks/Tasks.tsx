@@ -22,7 +22,7 @@ export default function Tasks({
   handlePause,
   handleCheck,
 }: TasksProps) {
-  const { tasks, addTask } = useTasks();
+  const { tasks, addTask, handleCheckboxChange, handleDelete } = useTasks();
 
   const handleAddTask = () => {
     addTask(inputTask, inputTime);
@@ -45,12 +45,15 @@ export default function Tasks({
               handleCheck={handleCheck}
               handlePause={handlePause}
               handlePlay={handlePlay}
+              handleCheckboxChange={() => handleCheckboxChange(index)} 
+              checked={t.checked}
+              handleDelete={()=> handleDelete(index)}
             />
           ))
         ) : (
           <p className={styles.tasks}>Cadastre suas tarefas</p>
         )}
-      </div>{" "}
+      </div>
     </div>
   );
 }

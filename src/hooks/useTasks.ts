@@ -3,29 +3,45 @@ import { useState, useEffect } from "react";
 interface Task {
   task: string;
   time: string;
+  checked: boolean;
 }
 
 export default function useTasks() {
   const [tasks, setTasks] = useState<Task[]>([]);
 
-  // Function to add a task and save it to localStorage
   const addTask = (task: string, time: string) => {
     if (task && time) {
-      const newTask = { task, time };
+      const newTask = { task, time, checked: false };
       const updatedTasks = [...tasks, newTask];
       setTasks(updatedTasks);
 
-      // Save tasks to localStorage with a timestamp
       const expirationDate = new Date();
-      expirationDate.setHours(24, 0, 0, 0); // Set expiration to midnight
+      expirationDate.setHours(24, 0, 0, 0);
       localStorage.setItem(
         "tasks",
-        JSON.stringify({ tasks: updatedTasks, expiresAt: expirationDate.getTime() })
+        JSON.stringify({
+          tasks: updatedTasks,
+          expiresAt: expirationDate.getTime(),
+        })
       );
     }
   };
 
-  // Function to check and clear expired tasks from localStorage
+  const handleDelete = (index: number) => {
+    const updatedTasks = tasks.filter((_, i) => i !== index);
+    setTasks(updatedTasks);
+    localStorage.setItem("tasks", JSON.stringify({ tasks: updatedTasks }));
+  };
+
+  
+  const handleCheckboxChange = (index: number) => {
+    const updatedTasks = tasks.map((task, i) => ({
+      ...task,
+      checked: i === index ? !task.checked : false, 
+    }));
+    setTasks(updatedTasks);  
+  };
+
   const checkAndClearExpiredTasks = () => {
     const storedData = localStorage.getItem("tasks");
     if (storedData) {
@@ -40,7 +56,7 @@ export default function useTasks() {
     }
   };
 
-  // Load tasks from localStorage on hook initialization
+
   useEffect(() => {
     checkAndClearExpiredTasks();
   }, []);
@@ -48,5 +64,7 @@ export default function useTasks() {
   return {
     tasks,
     addTask,
+    handleDelete,
+    handleCheckboxChange,
   };
 }
