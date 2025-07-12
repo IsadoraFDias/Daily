@@ -7,16 +7,13 @@ import Tasks from "./components/Tasks/Tasks";
 export default function Home() {
   const {
     counter,
-    inputTime,
-    inputTask,
     typeClick,
-    handleTimeChange,
-    handleTaskChange,
     handlePlay,
     handlePause,
     handleCheck,
     borderStyleCounter,
   } = useCounter();
+
   return (
     <>
       <Header currentPage="home" />
@@ -27,10 +24,6 @@ export default function Home() {
           borderStyleCounter={borderStyleCounter}
         />
         <Tasks
-          inputTime={inputTime}
-          inputTask={inputTask}
-          handleTaskChange={handleTaskChange}
-          handleTimeChange={handleTimeChange}
           handlePlay={handlePlay}
           handlePause={handlePause}
           handleCheck={handleCheck}

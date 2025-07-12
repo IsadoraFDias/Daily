@@ -4,29 +4,22 @@ import Task from "./components/Task/Task";
 import useTasks from "../../../../hooks/useTasks";
 
 interface TasksProps {
-  inputTime: string;
-  inputTask: string;
-  handleTimeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleTaskChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handlePlay: () => void;
   handlePause: () => void;
   handleCheck: () => void;
 }
 
 export default function Tasks({
-  inputTime,
-  inputTask,
-  handleTimeChange,
-  handleTaskChange,
   handlePlay,
   handlePause,
   handleCheck,
 }: TasksProps) {
-  const { tasks, addTask, handleCheckboxChange, handleDelete } = useTasks();
+  const { tasks, addTask, handleCheckboxChange, handleDelete, handleTaskChange, handleTimeChange, inputTask, inputTime } = useTasks();
 
   const handleAddTask = () => {
     addTask(inputTask, inputTime);
   };
+
   return (
     <div className={styles.columnForm}>
       <FormTask

@@ -1,28 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
-import { formatInputTime } from "../utils/formatsTimer";
+import useTasks from "./useTasks";
 
 export default function useCounter() {
-  const [inputTime, setInputTime] = useState<string>("0:00:00");
-  const [inputTask, setInputTask] = useState<string>("");
   const [typeClick, setTypeClick] = useState<string>("");
   const [counter, setCounter] = useState(0);
-  const [time, setTime] = useState<number>(0);
   const [intervalId, setIntervalId] = useState<number | null>(null);
 
-  const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const rawInput = event.target.value;
-    const formattedInput = formatInputTime(rawInput);
-    setInputTime(formattedInput);
-
-    const [hours, minutes, seconds] = formattedInput.split(":").map(Number);
-    const timeInSeconds = hours * 3600 + minutes * 60 + seconds;
-    setTime(timeInSeconds);
-  };
-
-  const handleTaskChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const task = event.target.value;
-    setInputTask(task);
-  }
+const {time, setTime, inputTime, setInputTime, inputTask, } = useTasks();
 
   const handlePlay = () => {
     if (!intervalId) {
@@ -88,7 +72,7 @@ export default function useCounter() {
         setTime(0);
       }
     }
-  }, [counter, time, intervalId]);
+  }, [counter, time, intervalId, setTime]);
 
   useEffect(() => {
     if (intervalId) {
@@ -100,15 +84,12 @@ export default function useCounter() {
     counter,
     setCounter,
     time,
-    setTime,
     inputTime,
     setInputTime,
     typeClick,
     setTypeClick,
     intervalId,
     setIntervalId,
-    handleTimeChange,
-    handleTaskChange,
     inputTask,
     handlePlay,
     handlePause,
