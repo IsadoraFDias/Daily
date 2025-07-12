@@ -7,11 +7,17 @@ interface Task {
   checked: boolean;
 }
 
-export default function useTasks() {
+interface TaskProp {
+  resetCounter: () => void;
+}
+
+export default function useTasks({resetCounter}: TaskProp) {
+
   const [tasks, setTasks] = useState<Task[]>([]);
   const [inputTask, setInputTask] = useState<string>("");
   const [time, setTime] = useState<number>(0);
   const [inputTime, setInputTime] = useState<string>("0:00:00");
+
 
   const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const rawInput = event.target.value;
@@ -26,8 +32,8 @@ export default function useTasks() {
   const handleTaskChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const task = event.target.value;
     setInputTask(task);
-  }
-  
+  };
+
   const addTask = (task: string, time: string) => {
     if (task && time) {
       const newTask = { task, time, checked: false };
@@ -52,21 +58,22 @@ export default function useTasks() {
     localStorage.setItem("tasks", JSON.stringify({ tasks: updatedTasks }));
   };
 
-  
   const handleCheckboxChange = (index: number) => {
     const updatedTasks = tasks.map((task, i) => ({
       ...task,
-      checked: i === index ? !task.checked : false, 
+      checked: i === index ? !task.checked : false,
     }));
-    setTasks(updatedTasks); 
+    setTasks(updatedTasks);
 
-      const storedData = JSON.parse(localStorage.getItem("tasks") || "{}");
-  localStorage.setItem(
-    "tasks",
-    JSON.stringify({
-      ...storedData,
-      tasks: updatedTasks,
-    })) 
+    const storedData = JSON.parse(localStorage.getItem("tasks") || "{}");
+    localStorage.setItem(
+      "tasks",
+      JSON.stringify({
+        ...storedData,
+        tasks: updatedTasks,
+      })
+    );
+    resetCounter();
   };
 
   const checkAndClearExpiredTasks = () => {
@@ -82,7 +89,6 @@ export default function useTasks() {
       }
     }
   };
-
 
   useEffect(() => {
     checkAndClearExpiredTasks();

@@ -7,14 +7,25 @@ interface TasksProps {
   handlePlay: () => void;
   handlePause: () => void;
   handleCheck: () => void;
+  resetCounter: () => void;
 }
 
 export default function Tasks({
   handlePlay,
   handlePause,
   handleCheck,
+  resetCounter,
 }: TasksProps) {
-  const { tasks, addTask, handleCheckboxChange, handleDelete, handleTaskChange, handleTimeChange, inputTask, inputTime } = useTasks();
+  const {
+    tasks,
+    addTask,
+    handleCheckboxChange,
+    handleDelete,
+    handleTaskChange,
+    handleTimeChange,
+    inputTask,
+    inputTime,
+  } = useTasks({ resetCounter });
 
   const handleAddTask = () => {
     addTask(inputTask, inputTime);
@@ -38,9 +49,9 @@ export default function Tasks({
               handleCheck={handleCheck}
               handlePause={handlePause}
               handlePlay={handlePlay}
-              handleCheckboxChange={() => handleCheckboxChange(index)} 
+              handleCheckboxChange={() => handleCheckboxChange(index)}
               checked={t.checked}
-              handleDelete={()=> handleDelete(index)}
+              handleDelete={() => handleDelete(index)}
             />
           ))
         ) : (

@@ -12,6 +12,7 @@ export default function Home() {
     handlePause,
     handleCheck,
     borderStyleCounter,
+    resetCounter,
   } = useCounter();
 
   return (
@@ -27,6 +28,7 @@ export default function Home() {
           handlePlay={handlePlay}
           handlePause={handlePause}
           handleCheck={handleCheck}
+          resetCounter={resetCounter}
         />
       </div>
     </>
