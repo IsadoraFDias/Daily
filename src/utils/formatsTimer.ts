@@ -16,3 +16,8 @@ export function formatInputTime(input: string): string {
 
   return `${hours.toString().padStart(1, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
 }
+
+export function convertTimeToSeconds(timeString: string): number {
+  const [hours, minutes, seconds] = timeString.split(":").map(Number);
+  return hours * 3600 + minutes * 60 + seconds;
+}

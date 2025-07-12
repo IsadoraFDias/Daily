@@ -58,7 +58,15 @@ export default function useTasks() {
       ...task,
       checked: i === index ? !task.checked : false, 
     }));
-    setTasks(updatedTasks);  
+    setTasks(updatedTasks); 
+
+      const storedData = JSON.parse(localStorage.getItem("tasks") || "{}");
+  localStorage.setItem(
+    "tasks",
+    JSON.stringify({
+      ...storedData,
+      tasks: updatedTasks,
+    })) 
   };
 
   const checkAndClearExpiredTasks = () => {

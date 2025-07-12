@@ -1,29 +1,41 @@
 import { useCallback, useEffect, useState } from "react";
-import useTasks from "./useTasks";
+import { convertTimeToSeconds } from "../utils/formatsTimer";
 
 export default function useCounter() {
   const [typeClick, setTypeClick] = useState<string>("");
   const [counter, setCounter] = useState(0);
   const [intervalId, setIntervalId] = useState<number | null>(null);
+  const [time, setTime] = useState(0);
 
-const {time, setTime, inputTime, setInputTime, inputTask, } = useTasks();
 
-  const handlePlay = () => {
-    if (!intervalId) {
-      const id = setInterval(() => {
-        setCounter((prevCounter) => {
-          if (prevCounter < time) {
-            return prevCounter + 1;
-          } else {
-            clearInterval(id);
-            return prevCounter;
-          }
-        });
-      }, 1000);
-      setIntervalId(id);
-    }
-    setTypeClick("play");
-  };
+const fetchCheckedTaskTime = useCallback((): number => {
+  const storedData = JSON.parse(localStorage.getItem("tasks") || "{}");
+  const checkedTask = storedData.tasks?.find((task: { checked: boolean }) => task.checked);
+  if (checkedTask) {
+    return convertTimeToSeconds(checkedTask.time);
+  }
+  return 0;
+}, []);
+
+const handlePlay = () => {
+  const updatedTime = fetchCheckedTaskTime(); 
+
+  if (updatedTime > 0 && !intervalId) {
+    const id = setInterval(() => {
+      setCounter((prevCounter) => {
+        if (prevCounter < updatedTime) {
+          return prevCounter + 1;
+        } else {
+          clearInterval(id);
+          return prevCounter;
+        }
+      });
+    }, 1000);
+    setIntervalId(id);
+  }
+  setTime(updatedTime); 
+  setTypeClick("play");
+};
 
   const handlePause = () => {
     if (intervalId) {
@@ -40,7 +52,6 @@ const {time, setTime, inputTime, setInputTime, inputTask, } = useTasks();
     }
     setCounter(0);
     setTime(0);
-    setInputTime("0:00:00");
     setTypeClick("");
   };
 
@@ -82,15 +93,7 @@ const {time, setTime, inputTime, setInputTime, inputTask, } = useTasks();
 
   return {
     counter,
-    setCounter,
-    time,
-    inputTime,
-    setInputTime,
     typeClick,
-    setTypeClick,
-    intervalId,
-    setIntervalId,
-    inputTask,
     handlePlay,
     handlePause,
     handleCheck,
